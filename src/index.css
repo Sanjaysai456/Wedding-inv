@@ -1,0 +1,693 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --kumkum: #C0392B;
+  --kumkum-deep: #8B1A1A;
+  --kumkum-light: #E85555;
+  --turmeric: #D4A017;
+  --turmeric-light: #F5C842;
+  --turmeric-pale: #FFF5CC;
+  --emerald: #1A5C38;
+  --emerald-light: #2E8B57;
+  --gold: #B8860B;
+  --gold-bright: #FFD700;
+  --gold-light: #F0C040;
+  --cream: #FDF6E3;
+  --ivory: #FFFBF0;
+  --dark-text: #2C1810;
+  --mid-text: #5C3317;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--ivory);
+  color: var(--dark-text);
+  overflow-x: hidden;
+  cursor: default;
+}
+
+/* ─── PETAL CANVAS ─── */
+#petal-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── GOLD ORNAMENT LINES ─── */
+.ornament-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0.5rem 0;
+}
+.ornament-line::before,
+.ornament-line::after {
+  content: '';
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.ornament-diamond {
+  width: 8px; height: 8px;
+  background: var(--gold-bright);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+
+/* ─── SECTION GOLD FRAME ─── */
+.gold-frame {
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 0 5px rgba(184,134,11,0.12), 0 0 0 8px rgba(184,134,11,0.06), inset 0 0 0 3px rgba(184,134,11,0.08);
+  position: relative;
+}
+.gold-frame::before,
+.gold-frame::after {
+  content: '✦';
+  position: absolute;
+  color: var(--gold-bright);
+  font-size: 1rem;
+}
+.gold-frame::before { top: -12px; left: 50%; transform: translateX(-50%); }
+.gold-frame::after  { bottom: -12px; left: 50%; transform: translateX(-50%); }
+
+.corner-ornament {
+  position: absolute;
+  width: 40px; height: 40px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.8;
+}
+.corner-ornament.tl { top: 8px; left: 8px; border-width: 2px 0 0 2px; }
+.corner-ornament.tr { top: 8px; right: 8px; border-width: 2px 2px 0 0; }
+.corner-ornament.bl { bottom: 8px; left: 8px; border-width: 0 0 2px 2px; }
+.corner-ornament.br { bottom: 8px; right: 8px; border-width: 0 2px 2px 0; }
+
+/* ─── HERO SECTION ─── */
+#hero {
+  min-height: 100vh;
+  background: 
+    radial-gradient(ellipse at 50% 0%, rgba(212,160,23,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(192,57,43,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(26,92,56,0.12) 0%, transparent 50%),
+    linear-gradient(180deg, #1A0A00 0%, #3B1005 30%, #5C1F08 60%, #3B1005 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Mandala background */
+.hero-mandala {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(90vw, 700px);
+  height: min(90vw, 700px);
+  opacity: 0.07;
+  animation: slowSpin 80s linear infinite;
+}
+
+@keyframes slowSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Arch SVG */
+.hero-arch {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: min(100vw, 900px);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 780px;
+  width: 100%;
+}
+
+.hero-blessing {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  color: var(--turmeric-light);
+  letter-spacing: 0.08em;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  animation: fadeInDown 1.2s ease both;
+}
+
+.aum-symbol {
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--gold-bright);
+  display: block;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 0 20px rgba(255,215,0,0.6);
+  animation: glow 3s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% { text-shadow: 0 0 20px rgba(255,215,0,0.6); }
+  50% { text-shadow: 0 0 40px rgba(255,215,0,1), 0 0 60px rgba(255,215,0,0.4); }
+}
+
+.hero-names-block {
+  background: rgba(255,245,200,0.05);
+  border: 1px solid rgba(255,215,0,0.3);
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1.5rem, 5vw, 4rem);
+  margin: 1.5rem auto;
+  position: relative;
+  animation: fadeInUp 1.4s ease 0.3s both;
+  backdrop-filter: blur(4px);
+  max-width: 680px;
+}
+
+.bride-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  color: var(--gold-bright);
+  line-height: 1.1;
+  text-shadow: 0 2px 20px rgba(255,215,0,0.4), 0 0 40px rgba(212,160,23,0.3);
+  display: block;
+}
+
+.weds-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  color: var(--turmeric-light);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin: 0.5rem 0;
+  display: block;
+}
+
+.groom-name {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(2.8rem, 8vw, 5.8rem);
+  color: #FFF8DC;
+  line-height: 1.1;
+  text-shadow: 0 2px 20px rgba(255,248,220,0.3);
+  display: block;
+}
+
+.save-date {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.85rem, 2vw, 1rem);
+  color: var(--turmeric-light);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 2rem;
+  animation: fadeInUp 1.4s ease 0.6s both;
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: bounce 2s ease-in-out infinite;
+  color: var(--gold);
+  font-size: 1.5rem;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Lotus decorations */
+.lotus-row {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 1rem 0;
+  animation: fadeInUp 1.4s ease 0.9s both;
+}
+
+/* ─── SECTION COMMON ─── */
+section {
+  padding: clamp(60px, 8vw, 100px) clamp(20px, 5vw, 60px);
+  position: relative;
+}
+
+.section-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.section-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--kumkum);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: var(--dark-text);
+  line-height: 1.2;
+}
+
+.section-title span {
+  color: var(--kumkum);
+}
+
+/* ─── SECTION 2: PARENTS ─── */
+#parents {
+  background: 
+    radial-gradient(ellipse at 50% 100%, rgba(212,160,23,0.08) 0%, transparent 60%),
+    linear-gradient(180deg, var(--ivory) 0%, #FEF3DC 50%, var(--ivory) 100%);
+}
+
+.parents-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+.family-card {
+  background: linear-gradient(135deg, rgba(255,248,220,0.9), rgba(255,245,200,0.7));
+  border: 1.5px solid rgba(184,134,11,0.35);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  position: relative;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.family-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 40px rgba(184,134,11,0.2);
+}
+
+.family-card-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, var(--kumkum), var(--kumkum-deep));
+  color: white;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 4px 16px;
+  white-space: nowrap;
+}
+
+.family-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  color: var(--dark-text);
+  margin-bottom: 0.25rem;
+}
+
+.family-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--mid-text);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.invite-message {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--mid-text);
+  line-height: 2;
+  text-align: center;
+  margin: 2.5rem auto;
+  max-width: 600px;
+}
+
+.credentials-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.credential-item {
+  background: linear-gradient(135deg, rgba(192,57,43,0.06), rgba(212,160,23,0.06));
+  border: 1px solid rgba(184,134,11,0.25);
+  padding: 1.25rem;
+  text-align: center;
+  position: relative;
+}
+
+.credential-role {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--kumkum);
+  margin-bottom: 0.5rem;
+}
+
+.credential-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: var(--dark-text);
+  font-style: italic;
+  line-height: 1.4;
+}
+
+.credential-degree {
+  font-size: 0.85rem;
+  color: var(--emerald);
+  font-weight: 400;
+  margin-top: 0.3rem;
+}
+
+/* ─── SECTION 3: TIMELINE ─── */
+#timeline {
+  background: 
+    radial-gradient(ellipse at 10% 50%, rgba(26,92,56,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 50%, rgba(192,57,43,0.07) 0%, transparent 50%),
+    linear-gradient(180deg, var(--ivory), #FFF8F0, var(--ivory));
+}
+
+.timeline-container {
+  position: relative;
+  margin-top: 3rem;
+  padding: 0 0 0 clamp(20px, 4vw, 40px);
+}
+
+.timeline-spine {
+  position: absolute;
+  left: clamp(30px, 5vw, 50px);
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, var(--gold) 10%, var(--gold) 90%, transparent);
+}
+
+.day-block {
+  margin-bottom: 3rem;
+}
+
+.day-heading {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  margin-left: clamp(40px, 7vw, 70px);
+}
+
+.day-badge {
+  background: linear-gradient(135deg, var(--kumkum-deep), var(--kumkum));
+  color: white;
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(0.75rem, 1.5vw, 0.85rem);
+  padding: 6px 18px;
+  letter-spacing: 0.05em;
+  position: relative;
+}
+
+.day-date {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: var(--mid-text);
+}
+
+.event-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  margin-left: 0;
+  animation: slideIn 0.6s ease both;
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.event-node {
+  width: clamp(50px, 8vw, 70px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.event-dot {
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: var(--ivory);
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.event-dot.main {
+  width: 22px; height: 22px;
+  background: radial-gradient(circle, var(--gold-bright), var(--gold));
+  box-shadow: 0 0 12px rgba(255,215,0,0.5);
+}
+
+.event-time {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.7rem;
+  color: var(--gold);
+  text-align: center;
+  margin-top: 4px;
+  white-space: nowrap;
+  letter-spacing: 0.05em;
+}
+
+.event-card {
+  flex: 1;
+  padding: clamp(1rem, 3vw, 1.5rem);
+  margin-bottom: 0.5rem;
+  position: relative;
+  border-left: 3px solid;
+  transition: transform 0.2s ease;
+}
+
+.event-card:hover { transform: translateX(4px); }
+
+.event-card.haldi {
+  background: linear-gradient(135deg, rgba(245,200,66,0.15), rgba(212,160,23,0.08));
+  border-color: var(--turmeric);
+}
+.event-card.mehandi {
+  background: linear-gradient(135deg, rgba(26,92,56,0.12), rgba(46,139,87,0.06));
+  border-color: var(--emerald);
+}
+.event-card.ritual {
+  background: linear-gradient(135deg, rgba(192,57,43,0.1), rgba(212,160,23,0.06));
+  border-color: var(--kumkum);
+}
+.event-card.muhurtham {
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(212,160,23,0.1));
+  border-color: var(--gold-bright);
+  box-shadow: 0 4px 20px rgba(255,215,0,0.15);
+}
+.event-card.dinner {
+  background: linear-gradient(135deg, rgba(139,26,26,0.1), rgba(212,160,23,0.08));
+  border-color: var(--kumkum-deep);
+}
+
+.event-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  color: var(--dark-text);
+  margin-bottom: 0.3rem;
+}
+
+.event-desc {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.8vw, 0.95rem);
+  color: var(--mid-text);
+  line-height: 1.6;
+}
+
+.event-icon { font-size: 1.3rem; margin-bottom: 0.3rem; }
+
+.muhurtham-glow {
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, var(--gold-bright), var(--turmeric));
+}
+
+/* ─── SECTION 4: VENUE ─── */
+#venue {
+  background: linear-gradient(180deg, #1A0A00 0%, #3B1005 50%, #1A0A00 100%);
+  color: var(--cream);
+  text-align: center;
+}
+
+#venue .section-label { color: var(--turmeric-light); }
+#venue .section-title { color: var(--cream); }
+#venue .section-title span { color: var(--gold-bright); }
+
+.venue-card {
+  background: rgba(255,245,200,0.05);
+  border: 1px solid rgba(255,215,0,0.25);
+  padding: clamp(2rem, 5vw, 3.5rem);
+  margin: 3rem auto 0;
+  max-width: 650px;
+  position: relative;
+  text-align: center;
+  backdrop-filter: blur(4px);
+}
+
+.venue-name {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: var(--gold-bright);
+  letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(255,215,0,0.4);
+  margin-bottom: 0.5rem;
+}
+
+.venue-sub {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  color: var(--turmeric-light);
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+}
+
+.venue-address {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.95rem, 2vw, 1.1rem);
+  color: rgba(255,245,200,0.8);
+  line-height: 2;
+  margin-bottom: 2rem;
+}
+
+.directions-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, var(--kumkum-deep), var(--kumkum));
+  color: white;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 14px 32px;
+  text-decoration: none;
+  border: 1px solid rgba(255,215,0,0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.directions-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.directions-btn:hover::before { left: 100%; }
+
+.directions-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(192,57,43,0.4);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background: #0D0500;
+  text-align: center;
+  padding: 2.5rem 20px;
+  color: rgba(255,245,200,0.5);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+footer .footer-names {
+  font-family: 'Great Vibes', cursive;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  color: var(--gold);
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+/* ─── JASMINE GARLAND DIVIDER ─── */
+.jasmine-divider {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  letter-spacing: 0.3em;
+  color: var(--emerald-light);
+  opacity: 0.7;
+}
+
+/* ─── DECORATIVE KOLAM BAR ─── */
+.kolam-bar {
+  width: 100%;
+  height: 6px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--kumkum) 0px, var(--kumkum) 20px,
+    var(--gold) 20px, var(--gold) 40px,
+    var(--emerald) 40px, var(--emerald) 60px,
+    var(--turmeric) 60px, var(--turmeric) 80px
+  );
+}
+
+/* ─── REVEAL ANIMATIONS ─── */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .credentials-block { grid-template-columns: 1fr; }
+  .hero-names-block { padding: 1.5rem 1rem; }
+}
+
+@media (min-width: 768px) {
+  .parents-wrapper { grid-template-columns: 1fr 1fr; }
+}
